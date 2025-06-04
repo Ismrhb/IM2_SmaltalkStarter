@@ -1,0 +1,21 @@
+{
+    "de": {
+      "name": "Deutsch",
+      "title": "Smalltalk Starter",
+      "subtitle": "Mit einem Klick zum Gespräch",
+      "text": "Egal ob peinliche Stille beim Smalltalk oder der perfekte Eisbrecher fürs nächste Fest – hier findest du zufällige Fakten, die Gespräche ins Rollen bringen.",
+      "startButton": "Los gehts!",
+      "didYouKnow": "wusstest du...",
+      "next": "next"
+    },
+    "en": {
+      "name": "English",
+      "title": "Smalltalk Starter",
+      "subtitle": "Start a conversation with one click",
+      "text": "Whether it's awkward silence during small talk or the perfect icebreaker for the next party – here you'll find random facts to get conversations going.",
+      "startButton": "Let’s go!",
+      "didYouKnow": "did you know...",
+      "next": "next"
+    }
+  }
+  
