@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Facts</title>
+</head>
+
+<body>
+
+    <nav>
+        <div class="navigation-wrapper">
+            <div class="navigation-sites">
+              <!-- z. B. Seitenlinks -->
+
+              <img src="/img/zuhause.png" alt="Bild 1">
+              <img src="/img/mogen.png" alt="Bild 2">
+              <img src="/img/die-gluhbirne.png" alt="Bild 3">
+
+            </div>
+            <div class="navigation-language">
+              <!-- z. B. Sprachumschalter -->
+                <span class="navigation-text">DE</span>
+                <span class="navigation-text">EN</span>
+              </div>
+            </div>
+          </div>
+          
+    </nav>
+
+    <main class="startbildschirm">
+        <section>
+          <h1 class="titel">Smalltalk Starter</h1>
+          <h2 class="untertitel">Mit einem Klick zum Gespräch</h2>
+          <p class="text">
+            Egal ob peinliche Stille beim Smalltalk oder der perfekte Eisbrecher
+            fürs nächste Fest – hier findest du zufällige Fakten, die Gespräche ins
+            Rollen bringen.
+          </p>
+    
+          <article class="facts">
+            <div id="button-start" class="factbutton">
+              <p style="font-weight: 800; font-size: 24pt; margin: 0 20px;">
+                Los gehts!
+              </p>
+            </div>
+    
+            <div id="textboxelement" class="textbox">
+              <div class="textbox-header">
+                <p class="text-texbox-fett">wusstest du...</p>
+                <img src="/img/mogen.png" alt="Bild 1" class="herz-icon" />
+              </div>
+              <p class="text-fact" id="fact"></p>
+              <div id="button-next" class="button-next">
+                <p class="text-button-next-fett">next</p>
+              </div>
+
+            </div>
+          </article>
+        </section>
+      </main>
+
+    <script src="skript.js" type="module"></script>
+</body>
+</html>

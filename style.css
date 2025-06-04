@@ -1,0 +1,260 @@
+/* === Navigationsleiste und Layout === */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Gwendolyn:wght@400;700&family=Monsieur+La+Doulaise&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Notable&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Dirt&family=Rubik+Wet+Paint&family=Sigmar&display=swap');
+
+/* === Animationsklassen === */
+
+/* Wrapper um Button und Textbox exakt zu überlagern */
+.start-wrapper {
+  position: relative;
+  width: 30%;
+  height: 4rem;
+  margin: 3rem auto;
+}
+
+/* Startbutton mit animierter Breite/Höhe */
+#button-start {
+  width: 90%;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+  border-radius: 2.2rem;
+  background-color: #d9d9d9;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+/* Textbox erscheint exakt über dem Button */
+#textboxelement {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #d9d9d9;
+  border-radius: 2.2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 1s ease-in-out;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Sichtbarkeitsklasse für animiertes Erscheinen */
+#textboxelement.visible {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+  width: 90vw;
+  height: auto;
+  transition: all 1s ease-in-out;
+}
+
+/* Weiter bestehende Animationen */
+.expand {
+  width: 90% !important;
+  transition: all 1s ease-in-out;
+}
+
+#button-start.expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Verstecke die Textbox initial */
+/* (wird nun durch absolute Positionierung ersetzt) */
+
+/* Einblendeffekt */
+.fade-in {
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+
+/* Initial unsichtbar */
+.text-texbox-fett,
+.herz-icon,
+#fact,
+#button-next {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+/* Sichtbarkeitsklasse */
+.fade-delayed {
+  opacity: 1 !important;
+}
+
+.navigation-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.navigation-sites,
+.navigation-language {
+  height: 3rem;
+  flex-shrink: 0;
+  border-radius: 2.1875rem;
+  background-color: #D9D9D9;
+}
+
+.navigation-sites {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 20rem;
+  height: 4rem;
+  border-radius: 2.1875rem;
+}
+
+.navigation-language {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 10rem;
+  height: 4rem;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1;
+  overflow: hidden;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+
+.navigation-language span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.navigation-sites img {
+  height: 2.5rem;
+  width: auto;
+  object-fit: contain;
+}
+
+.navigation-text {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.titel {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 6rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.untertitel {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin: 0;
+  padding-top: 4rem;
+  padding-bottom: 1.25rem;
+}
+
+.text {
+  padding-top: 0;
+  padding-bottom: 1.25rem;
+  padding-right: 1.25rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 200;
+  margin: 0;
+}
+
+.startbildschirm {
+  width: 60%;
+  margin: 0 auto;
+  padding: 1.25rem;
+  text-align: left;
+}
+
+.facts {
+  position: relative;
+  left: 0;
+}
+
+.factbutton {
+  font-family: 'Montserrat', sans-serif;
+  width: 30%;
+  padding: 0.3125rem 1.25rem;
+  margin: 3.125rem 3.125rem 3.125rem 0;
+  background-color: #d9d9d9;
+  border-radius: 2.1875rem;
+  cursor: pointer;
+  transition: all 0.6s ease-in-out;
+  overflow: hidden;
+}
+
+.textbox {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  position: relative;
+  background-color: #D9D9D9;
+  padding: 1.25rem;
+  border-radius: 2.1875rem;
+}
+
+.text-texbox-fett {
+  margin: 0 0.625rem 1.25rem 1.25rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.text-fact {
+  margin: 0 1.25rem 1.25rem 1.25rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+.button-next {
+  align-self: flex-end;
+  margin-top: 2rem;
+  background-color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 2.1875rem;
+  color: white;
+  font-size: 0.875rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.text-button-next-fett {
+  margin: 0;
+  padding: 0.3125rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.textbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.herz-icon {
+  width: 2rem;
+  height: auto;
+}
+
+.text li {
+  margin-bottom: 1.25rem;
+}
