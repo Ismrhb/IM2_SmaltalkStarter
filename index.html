@@ -10,25 +10,20 @@
 
 <body>
 
-    <nav>
-        <div class="navigation-wrapper">
-            <div class="navigation-sites">
-              <!-- z. B. Seitenlinks -->
-
-              <img src="/img/zuhause.png" alt="Bild 1">
-              <img src="/img/mogen.png" alt="Bild 2">
-              <img src="/img/die-gluhbirne.png" alt="Bild 3">
-
-            </div>
-            <div class="navigation-language">
-              <!-- z. B. Sprachumschalter -->
-                <span class="navigation-text">DE</span>
-                <span class="navigation-text">EN</span>
-              </div>
-            </div>
-          </div>
-          
-    </nav>
+  <nav>
+    <div class="navigation-wrapper">
+      <div class="navigation-sites">
+        <a href="index.html"><img src="/img/zuhause.png" alt="Startseite" /></a>
+        <a href="favorites.html"><img src="/img/mogen.png" alt="Favoriten" /></a>
+        <span class="navigation-active-home" >  </span>
+      </div>
+      <div class="navigation-language">
+        <div class="language-highlight"></div>
+        <span class="navigation-text" data-lang="DE">DE</span>
+        <span class="navigation-text" data-lang="EN">EN</span>
+      </div>
+    </div>
+  </nav>
 
     <main class="startbildschirm">
         <section>
@@ -50,7 +45,8 @@
             <div id="textboxelement" class="textbox">
               <div class="textbox-header">
                 <p class="text-texbox-fett">wusstest du...</p>
-                <img src="/img/mogen.png" alt="Bild 1" class="herz-icon" />
+                <img src="img/mogen.png" alt="Favoriten" class="herz-icon">
+                
               </div>
               <p class="text-fact" id="fact"></p>
               <div id="button-next" class="button-next">
