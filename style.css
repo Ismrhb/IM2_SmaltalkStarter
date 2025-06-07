@@ -47,10 +47,9 @@
 #textboxelement.visible {
   display: flex;
   flex-direction: column;
-  position: relative;
   opacity: 1;
   pointer-events: auto;
-  width: 90vw;
+  width: 100%;
   height: auto;
   transition: all 1s ease-in-out;
 }
@@ -111,23 +110,84 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 20rem;
+  width: 10rem;
   height: 4rem;
   border-radius: 2.1875rem;
+  background-color: #f0f0f0;
+  position: relative;
+  z-index: 1;
+}
+
+.navigation-sites img {
+  position: relative;
+  z-index: 1;
+}
+
+.navigation-active-home{
+
+  background-color: #A0A0A0;
+  width: 5rem;
+  height: 4rem;
+  border-radius: 2.1875rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+
+}
+
+.navigation-active-fav{
+
+  background-color: #A0A0A0;
+  width: 5rem;
+  height: 4rem;
+  border-radius: 2.1875rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+
 }
 
 .navigation-language {
+  position: relative;
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 10rem;
   height: 4rem;
+  flex-shrink: 0;
+  border-radius: 2.1875rem;
+  background-color: #D9D9D9;
   font-weight: bold;
   font-size: 1rem;
   line-height: 1;
   overflow: hidden;
-  padding: 0 0.5rem;
   box-sizing: border-box;
+}
+
+.language-highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #A0A0A0; /* dunkleres Grau */
+  border-radius: 2.1875rem;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+
+.navigation-language .navigation-text {
+  z-index: 1;
+  width: 50%;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  line-height: 4rem;
+  user-select: none;
+  cursor: pointer;
 }
 
 .navigation-language span {
@@ -251,10 +311,288 @@
 }
 
 .herz-icon {
-  width: 2rem;
-  height: auto;
+  font-size: 2rem;
+  cursor: pointer;
+  height: 3.5rem;
+}
+.herz-icon.filled {
+  color: black;
 }
 
 .text li {
   margin-bottom: 1.25rem;
+}
+
+/* Masonry Grid Layout mit CSS Columns */
+.masonry-grid {
+  column-count: 3;
+  column-gap: 1rem;
+  list-style: none; /* Aufzählungszeichen entfernen */
+  padding: 0;
+  margin: 0;
+}
+
+/* Einzelne Favoriten-Einträge als Karten */
+.masonry-grid li {
+  background-color: #D9D9D9;
+  padding: 1.25rem;
+  border-radius: 2.1875rem;
+  margin-bottom: 1rem;
+  margin: 0.7rem;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 200;
+  text-align: justify;
+  hyphens: auto;
+}
+
+
+
+/* Responsiv */
+
+@media (max-width: 768px) {
+  .masonry-grid {
+    column-count: 2;
+  }
+}
+@media (max-width: 500px) {
+  .masonry-grid {
+    column-count: 1;
+  }
+}
+
+/* Zusätzliche Media Queries für Responsiveness */
+
+/* Tablet (iPad quer & hoch, bis 1024px) */
+@media (max-width: 1024px) {
+  .startbildschirm, .navigation-wrapper {
+    width: 90%;
+  }
+  .navigation-wrapper {
+    justify-content: center;
+  }
+  .titel {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+/* Handy (bis 600px) */
+@media (max-width: 600px) {
+  .startbildschirm, .navigation-wrapper {
+    width: 100%;
+  }
+  .navigation-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .titel {
+    margin-top: 0;
+    font-size: 8rem;
+    text-align: center;
+    width: 100%;
+    font-size: 3rem;
+  }
+  .navigation-sites {
+    width: 8rem;
+    height: 3.5rem;
+  }
+  .navigation-sites img {
+    height: 2rem;
+  }
+
+  .navigation-active-fav{
+
+    background-color: #A0A0A0;
+    width: 4rem;
+    height: 3.5rem;
+    border-radius: 2.1875rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+  
+  }
+  .masonry-grid {
+    column-count: 1;
+    padding: 0 0.5rem;
+  }
+}
+
+
+/* === Media Queries für Responsiveness === */
+
+/* Tablet: iPads hoch und quer */
+@media (max-width: 1024px) {
+  .startbildschirm,
+  .navigation-wrapper {
+    width: 90%;
+  }
+
+  .titel {
+    font-size: 3.5rem;
+    text-align: right;
+  }
+
+  .untertitel {
+    font-size: 1.5rem;
+    text-align: right;
+  }
+
+  .text {
+    font-size: 1.25rem;
+    text-align: right;
+  }
+
+  #button-start {
+    width: 100%;
+    font-size: 1rem;
+    text-align: right;
+  }
+
+  .navigation-sites,
+  .navigation-language {
+    width: 8rem;
+    height: 3.5rem;
+  }
+
+  .navigation-sites img {
+    height: 2rem;
+  }
+
+  .navigation-text {
+    font-size: 1.25rem;
+  }
+}
+
+/* Smartphone: iPhone-Größen bis 600px */
+@media (max-width: 600px) {
+  .startbildschirm,
+  .navigation-wrapper {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .navigation-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .titel {
+    font-size: 2.25rem;
+    text-align: left;
+  }
+
+  .untertitel {
+    font-size: 1.2rem;
+    text-align: left;
+  }
+
+  .text {
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  #button-start {
+    width: 100%;
+    font-size: 1rem;
+    padding: 1rem 0;
+    text-align: left;
+  }
+
+  .factbutton {
+    width: 100%;
+    margin: 2rem 0;
+  }
+
+  .textbox {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .text-texbox-fett,
+  .text-fact {
+    font-size: 1.2rem;
+    text-align: left;
+  }
+
+  .button-next {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .text-button-next-fett {
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  .navigation-sites,
+  .navigation-language {
+    width: 8rem;
+    height: 3rem;
+
+  }
+
+  .navigation-sites img {
+    height: 1.5rem;
+  }
+
+  .navigation-text {
+    font-size: 1rem;
+  }
+
+  .navigation-active-home{
+
+    background-color: #A0A0A0;
+    width: 4rem;
+    height: 3rem;
+    border-radius: 2.1875rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .navigation-active-fav{
+
+    background-color: #A0A0A0;
+    width: 4rem;
+    height: 3rem;
+    border-radius: 2.1875rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  .herz-icon {
+    height: 2.5rem;
+  }
+
+  .masonry-grid {
+    column-count: 1;
+  }
+
+  /* Einzelne Favoriten-Einträge als Karten */
+.masonry-grid li {
+  background-color: #D9D9D9;
+  border-radius: 2.1875rem;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 200;
+  text-align: justify;
+  hyphens: auto;
+}
+
 }

@@ -1,151 +1,86 @@
-const url = 'https://uselessfacts.jsph.pl/api/v2/facts/random?language=de';
+// === globale variable für aktuell gewählte sprache ===
+let currentLanguage =
+  localStorage.getItem("selectedLanguage") || navigator.language.slice(0, 2);
 
-async function loadFacts() {
-    try {
-        const response = await fetch(url);
-        return await response.json();
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
-}
+// === globale API url für fakten ===
+const urlBase = "https://uselessfacts.jsph.pl/api/v2/facts/random";
 
-// Funktion zum Fakt anzeigen
-async function zeigeFakt() {
-    const fakt = await loadFacts();
-    if (fakt && fakt.text) {
-        document.querySelector("#fact").textContent = fakt.text;
-    } else {
-        document.querySelector("#fact").textContent = "Fehler beim Laden des Fakts.";
-    }
-}
-
-// Klick-Events für beide Buttons
-document.querySelector("#button-next").addEventListener("click", zeigeFakt);
-
-
-const startBtn = document.getElementById("button-start");
+// === alle benötigten elemente aus dem DOM/HTML auslesen ===
+const title = document.querySelector(".titel");
+const subtitle = document.querySelector(".untertitel");
+const description = document.querySelector(".text");
+const startButtonText = document.querySelector("#button-start p");
+const startButton = document.querySelector("#button-start");
 const textbox = document.getElementById("textboxelement");
-
-startBtn.addEventListener("click", () => {
-  startBtn.classList.add("fade-out");
-  textbox.classList.add("fade-in");
-});
-
-
-// === Eventlistener für Startbutton ===
-document.querySelector("#button-start").addEventListener("click", async () => {
-    // === Referenzen auf HTML-Elemente ===
-    const button = document.querySelector("#button-start");
-    const textbox = document.querySelector("#textboxelement");
-    const factEl = document.querySelector("#fact");
-    const header = textbox.querySelector(".text-texbox-fett");
-    const herz = textbox.querySelector(".herz-icon");
-    const next = document.querySelector("#button-next");
-
-    // === Startanimation: Button wird vergrößert ===
-    button.classList.add("expand");
-    button.querySelector("p").style.opacity = "0"; // Text im Button ausblenden
-
-    // === Nach kurzer Verzögerung: Textbox einblenden ===
-    setTimeout(() => {
-        textbox.classList.add("fade-in"); // Textbox sichtbar machen
-        button.style.opacity = "0";       // Button komplett ausblenden
-        button.style.pointerEvents = "none"; // Button deaktivieren
-
-        // === Weitere Verzögerung: Inhalte der Textbox nacheinander einblenden ===
-        setTimeout(async () => {
-            header.classList.add("fade-delayed"); // Titel einblenden
-
-            // Herzsymbol verzögert einblenden
-            setTimeout(() => herz.classList.add("fade-delayed"), 200);
-
-            // "Next"-Button verzögert einblenden
-            setTimeout(() => {
-                next.classList.add("fade-delayed");
-
-                // Eventlistener für den "Next"-Button
-                next.addEventListener("click", async () => {
-                    const fact = await loadFacts();
-                    if (fact && fact.text) {
-                        factEl.textContent = fact.text; // Neuen Fakt anzeigen
-                    }
-                });
-            }, 300);
-
-            // === Ersten Fakt direkt nach Einblendung anzeigen ===
-            const fact = await loadFacts();
-            if (fact && fact.text) {
-                factEl.textContent = fact.text;
-                factEl.classList.add("fade-delayed");
-            }
-        }, 300); // Ende innerer Timeout
-    }, 300); // Ende äußerer Timeout
-});
-
-// "Next"-Button Event
-document.getElementById("button-next").addEventListener("click", async () => {
-    const fact = await loadFacts();
-    if (fact && fact.text) {
-        document.getElementById("fact").textContent = fact.text;
-    }
-});
-
-  // === JavaScript: Sprachumschaltung + Übersetzungen + Fakten laden ===
-
-let currentLanguage = localStorage.getItem('selectedLanguage') || navigator.language.slice(0, 2);
-
-const title = document.querySelector('.titel');
-const subtitle = document.querySelector('.untertitel');
-const description = document.querySelector('.text');
-const startButton = document.querySelector('#button-start p');
-const didYouKnow = document.querySelector('.text-texbox-fett');
-const nextButton = document.querySelector('.text-button-next-fett');
+const didYouKnow = document.querySelector(".text-texbox-fett");
+const nextButton = document.querySelector("#button-next");
+const nextButtonText = document.querySelector(".text-button-next-fett");
 const factElement = document.getElementById("fact");
-const languageSwitcher = document.querySelector('.navigation-language');
+const herz = textbox.querySelector(".herz-icon");
+const languageSwitcher = document.querySelector(".navigation-language");
 
-// Dynamisches Hintergrundelement für aktive Sprache hinzufügen
-const langBackground = document.createElement('div');
-langBackground.style.position = 'absolute';
-langBackground.style.backgroundColor = '#bfbfbf'; // dunkler als #D9D9D9
-langBackground.style.borderRadius = '8px';
-langBackground.style.transition = 'all 0.3s ease';
-langBackground.style.zIndex = '-1';
-languageSwitcher.style.position = 'relative';
+// === hintergrund für den aktuellen sprach-button erstellen ===
+const langBackground = document.createElement("div");
+langBackground.style.cssText = `
+  position: absolute;
+  background-color: #bfbfbf;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  z-index: -1;
+`;
+languageSwitcher.style.position = "relative";
 languageSwitcher.appendChild(langBackground);
 
+// === zufälligen fakt aus der API laden ===
+async function loadFact() {
+  try {
+    const response = await fetch(`${urlBase}?language=${currentLanguage}`);
+    const data = await response.json();
+    return data.text;
+  } catch (err) {
+    console.error("Fehler beim Laden des Fakts:", err);
+    return "Fehler beim Laden des Fakts.";
+  }
+}
+
+// === übersetzungs-daten aus json-datei laden ===
 async function loadTranslations() {
   try {
-    const response = await fetch('assets/translations.json');
+    const response = await fetch("assets/translations.json");
     return await response.json();
-  } catch (error) {
-    console.error('Fehler beim Laden der Übersetzungen:', error);
+  } catch (err) {
+    console.error("Fehler beim Laden der Übersetzungen:", err);
     return {};
   }
 }
 
-function setLanguage(language, content) {
-  currentLanguage = language;
-  title.innerText = content[language].title;
-  subtitle.innerText = content[language].subtitle;
-  description.innerText = content[language].text;
-  startButton.innerText = content[language].startButton;
-  didYouKnow.innerText = content[language].didYouKnow;
-  nextButton.innerText = content[language].next;
-  localStorage.setItem('selectedLanguage', language);
-  updateLanguageSwitcher(language);
+// === texte für aktuelle sprache setzen und UI aktualisieren ===
+function setLanguage(lang, content) {
+  currentLanguage = lang;
+  title.innerText = content[lang].title;
+  subtitle.innerText = content[lang].subtitle;
+  description.innerText = content[lang].text;
+  startButtonText.innerText = content[lang].startButton;
+  didYouKnow.innerText = content[lang].didYouKnow;
+  nextButtonText.innerText = content[lang].next;
+
+  localStorage.setItem("selectedLanguage", lang);
+  updateLanguageSwitcher(lang);
 }
 
-function updateLanguageSwitcher(currentLanguage) {
-  const spans = languageSwitcher.querySelectorAll('.navigation-text');
-  spans.forEach(span => {
-    span.style.cursor = 'pointer';
-  });
+// === position des hintergrunds im sprach-switcher aktualisieren ===
+function updateLanguageSwitcher(lang) {
+  const spans = languageSwitcher.querySelectorAll(".navigation-text");
+  spans.forEach((span) => (span.style.cursor = "pointer"));
 
-  const activeSpan = Array.from(spans).find(span => span.textContent.toLowerCase() === currentLanguage);
+  const activeSpan = Array.from(spans).find(
+    (span) => span.textContent.toLowerCase() === lang
+  );
+
   if (activeSpan) {
     const rect = activeSpan.getBoundingClientRect();
     const containerRect = languageSwitcher.getBoundingClientRect();
+
     langBackground.style.width = `${rect.width}px`;
     langBackground.style.height = `${rect.height}px`;
     langBackground.style.left = `${rect.left - containerRect.left}px`;
@@ -153,38 +88,115 @@ function updateLanguageSwitcher(currentLanguage) {
   }
 }
 
-async function loadFact() {
-  const apiUrl = `https://uselessfacts.jsph.pl/api/v2/facts/random?language=${currentLanguage}`;
-  try {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    return data.text;
-  } catch (error) {
-    console.error('Fehler beim Laden des Fakts:', error);
-    return "Fehler beim Laden des Fakts.";
-  }
-}
-
-// Fakt anzeigen bei Klick auf Next
-nextButton.parentElement.addEventListener("click", async () => {
+// === fakt laden und im DOM anzeigen ===
+async function showFact() {
   const fact = await loadFact();
   factElement.textContent = fact;
+  factElement.classList.add("fade-delayed");
+}
+
+// === wenn "Start"-Button geklickt wird ===
+startButton.addEventListener("click", async () => {
+  // startbutton animieren
+  startButton.classList.add("expand");
+  startButtonText.style.opacity = "0";
+
+  // textbox anzeigen
+  setTimeout(() => {
+    textbox.classList.add("visible");
+    startButton.style.opacity = "0";
+    startButton.style.pointerEvents = "none";
+
+    // elemente nacheinander anzeigen (text, herz, button)
+    setTimeout(async () => {
+      didYouKnow.classList.add("fade-delayed");
+      setTimeout(() => herz.classList.add("fade-delayed"), 200);
+      setTimeout(() => nextButton.classList.add("fade-delayed"), 300);
+
+      await showFact(); // fakt laden
+    }, 300);
+  }, 300);
 });
 
+// === wenn "Next"-Button geklickt wird ===
+nextButton.addEventListener("click", showFact);
+
+// === seite initial laden ===
 (async () => {
-  const content = await loadTranslations();
+  const content = await loadTranslations(); // übersetzungen laden
   const supportedLanguages = Object.keys(content);
 
-  if (!supportedLanguages.includes(currentLanguage)) currentLanguage = 'de';
+  // falls sprache nicht unterstützt wird → fallback
+  if (!supportedLanguages.includes(currentLanguage)) {
+    currentLanguage = "de";
+  }
 
+  // sprache setzen und fakt anzeigen
   setLanguage(currentLanguage, content);
+  await showFact();
 
-  languageSwitcher.addEventListener('click', async (e) => {
-    const clickedLang = e.target.textContent.toLowerCase();
+  // auf klick im sprachmenü reagieren
+  languageSwitcher.addEventListener("click", async (event) => {
+    const clickedLang = event.target.textContent.toLowerCase();
     if (supportedLanguages.includes(clickedLang)) {
       setLanguage(clickedLang, content);
-      const fact = await loadFact();
-      factElement.textContent = fact;
+      await showFact();
     }
   });
+
+// language navigation animiern
+  const languageWrapper = document.querySelector(".navigation-language");
+const highlight = document.querySelector(".language-highlight");
+
+languageWrapper.addEventListener("click", (e) => {
+  const clicked = e.target.closest(".navigation-text");
+  if (!clicked) return;
+
+  const lang = clicked.dataset.lang;
+  if (lang === "DE") {
+    highlight.style.transform = "translateX(0%)";
+  } else if (lang === "EN") {
+    highlight.style.transform = "translateX(100%)";
+  }
+
+  localStorage.setItem("lang", lang);
+});
+
+const navSites = document.querySelector('.navigation-sites');
+const navImages = navSites.querySelectorAll('img');
+
+
+// Klick-Logik zum Umschalten
+navImages.forEach((img, index) => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', () => {
+    setActiveNav(index);
+    // Optional: Hier kannst du auch Seitenwechsel oder Logik auslösen
+  });
+});
+
+// Favoritenfunktionen
+
+const factElement = document.querySelector(".text-fact");
+
+// Herz-Symbol Referenz holen
+const herz = document.querySelector(".herz-icon");
+
+if (herz) {
+  herz.addEventListener("click", () => {
+    const currentFact = factElement.textContent.trim();
+    if (!currentFact) return;
+
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    // Verhindern von Duplikaten
+    if (!favorites.includes(currentFact)) {
+      favorites.unshift(currentFact); // Neuster Fakt oben
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      herz.classList.add("marked"); // z. B. CSS-Effekt
+    }
+  });
+}
+
+
 })();
